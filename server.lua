@@ -34,6 +34,7 @@ function Router(data,response)
     response[#response + 1] = s_e
 end
 
+print("Server Created!")
 
 
 --srv:getaddr()
