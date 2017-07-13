@@ -1,10 +1,11 @@
 --Connect to wifi
---[[wifi.setmode(wifi.STATION)
+wifi.setmode(wifi.STATION)
 
 server_run = false
 function StartServer()
     print("Start Http Server!")
-    dofile("server.lua")
+    --dofile("server.lua")
+    dofile('gpioserver.lua')
     server_run = true
 end
 
@@ -29,6 +30,7 @@ function FindTarget(t)
 end
 wifi.sta.getap(FindTarget)
 
+--[[
 i=1
 gpio.mode(i,gpio.OUTPUT)
 gpio.mode(i+1,gpio.OUTPUT)
@@ -40,12 +42,11 @@ tmr.alarm(0,100,1,function()
     end
     t=t+1
 end)
-]]
 
-wifi.ap.config({ ssid = 'mymcu', auth = AUTH_OPEN })
+
+wifi.ap.config({ ssid = 'NodeMCU', auth = wifi.WPA_WPA2_PSK,pwd="779686611" });
+wifi.ap.setip({ip="1.8.8.1",netmask="255.255.255.0",gateway="1.8.8.1"})
 wifi.setmode(wifi.SOFTAP)
-dofile('httpServer.lua')
-httpServer:listen(80)
-httpServer:use('/welcome', function(req, res)
-    res:send('Hello ' .. req.query.name) -- /welcome?name=doge
-end)
+
+dofile('gpioserver.lua')
+]]
