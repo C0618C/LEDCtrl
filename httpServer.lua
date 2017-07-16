@@ -27,7 +27,7 @@ end
 --------------------
 -- Response
 --------------------
-Res = {
+local Res = {
 	_skt = nil,
 	_type = nil,
 	_status = nil,
@@ -181,7 +181,7 @@ end
 --------------------
 -- HttpServer
 --------------------
-httpServer = {
+local httpServer = {
 	_srv = nil,
 	_mids = {{
 		url = '.*',
@@ -221,3 +221,5 @@ function httpServer:listen(port)
 		end)
 	end)
 end
+
+return httpServer

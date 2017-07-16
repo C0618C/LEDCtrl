@@ -1,4 +1,5 @@
-dofile('httpServer.lua')
+local httpServer = require("httpServer")
+
 httpServer:listen(80)
 httpServer:use('/welcome', function(req, res)
     res:send('Hello ' .. req.query.name) -- /welcome?name=doge
@@ -13,5 +14,5 @@ httpServer:use('/gpiolist', function(req, res)
 end)
 
 httpServer:use('/setgpio', function(req, res)
-    res:send('{"x":"aaa"}')
+    res:send('{"x":"'..req.query.id..'"}')
 end)
