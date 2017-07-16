@@ -36,7 +36,7 @@ Res = {
 
 function Res:new(skt)
 	local o = {}
-	setmetatable(o, self)
+	setmetatable(o, self) --元表
     self.__index = self
     o._skt = skt
     return o
@@ -65,6 +65,7 @@ function Res:send(body)
 	local buf = 'HTTP/1.1 ' .. self._status .. '\r\n'
 		.. 'Content-Type: ' .. self._type .. '\r\n'
 		.. 'Content-Length:' .. string.len(body) .. '\r\n'
+		.. 'Access-Control-Allow-Origin:'..'*\r\n'
 	if self._redirectUrl ~= nil then
 		buf = buf .. 'Location: ' .. self._redirectUrl .. '\r\n'
 	end
@@ -107,13 +108,13 @@ function Res:sendFile(filename)
 	end
 	header = header .. '\r\n'
 
-	print('* Sending ', filename)
+	--print('* Sending ', filename)
 	local pos = 0
 	local function doSend()
 		file.open(filename, 'r')
 		if file.seek('set', pos) == nil then
 			self:close()
-			print('* Finished ', filename)
+			--print('* Finished ', filename)
 		else
 			local buf = file.read(512)
 			pos = pos + 512
@@ -141,6 +142,16 @@ function parseHeader(req, res)
 	if method == nil then
 		_, _, method, path = string.find(req.source, '([A-Z]+) (.+) HTTP')
 	end
+
+	if method:upper() == "POST" then
+		for word in string.gmatch(req.source, "[^\r\n]+") do 
+			local _,__,___,cl = word:find("Content%-Length:(%s*)(%d*)");
+			if _ ~= nil then
+				vars = (vars and vars.."&" or "")..req.source:sub(-1*cl)
+				break
+			end
+		end
+	end
 	local _GET = {}
 	if vars ~= nil then
 		vars = urlDecode(vars)
@@ -152,7 +163,7 @@ function parseHeader(req, res)
 	req.method = method
 	req.query = _GET
 	req.path = path
-	
+
 	return true
 end
 
@@ -199,15 +210,14 @@ function httpServer:listen(port)
 		conn:on('receive', function(skt, msg)	
 			local req = { source = msg, path = '', ip = skt:getpeer() }
 			local res = Res:new(skt)
-			
+
 			for i = 1, #self._mids do
 				if string.find(req.path, '^' .. self._mids[i].url .. '$')
 					and not self._mids[i].cb(req, res) then
 					break
 				end
 			end
-
-			collectgarbage()
+			collectgarbage() --lua 垃圾回收
 		end)
 	end)
 end

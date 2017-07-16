@@ -5,7 +5,7 @@ he_404 =[[HTTP/1.1 404 Not Found\r\n]]
 
 srv=net.createServer(net.TCP,1)
 function onReceive(n_sck,data)
-    --print("Recive Data:",data)
+    print("Recive Data:\n\r",data)
     local response = {}
     Router(data,response)
     
@@ -36,6 +36,13 @@ end
 
 print("Server Created!")
 
-
 --srv:getaddr()
 --srv:close()
+[[
+Recive Data:    POST /a HTTP/1.1
+Host: 192.168.0.115
+User-Agent: Go-http-client/1.1
+Content-Length: 9
+Content-Type: application/x-www-form-urlencoded
+Accept-Encoding: gzip
+]]

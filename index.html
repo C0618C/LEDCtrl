@@ -35,7 +35,28 @@
 	</ul>
 
 	<script>
-		Ajax({url:"/gpiolist",method:"GET"}).then(rsl=>alert(rsl));
+		function $(selecter){return document.querySelectorAll(selecter);}
+
+		function init(){
+			$("#gpiolist input[id*='gpio']").forEach(obj=>{
+				obj.addEventListener("change",e=>{
+					Ajax({url:"/setgpio",data:"id=abcc"}).then(r=>console.log(r));
+				});
+			})
+			Reflash();
+		}
+
+
+		function Reflash(){
+			Ajax({url:"/gpiolist",method:"GET"}).then(rsl=>{
+				rsl.forEach((i,j)=>{
+					let idx = (j>=10?"":"0")+j;
+					$("#gpio"+idx)[0].checked =(i == 0)
+				});
+			});
+		}
+
+		init();
 	</script>
 </body>
 

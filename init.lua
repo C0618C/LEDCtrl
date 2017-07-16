@@ -3,9 +3,9 @@ wifi.setmode(wifi.STATION)
 
 server_run = false
 function StartServer()
-    print("Start Http Server!")
+    --print("Start Http Server!")
     --dofile("server.lua")
-    dofile('gpioserver.lua')
+    --dofile('gpioserver.lua')
     server_run = true
 end
 
