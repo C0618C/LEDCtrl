@@ -10,9 +10,14 @@
 		#gpiolist{list-style:none;font-size: 50px;line-height: 50px;max-width: 600px;margin: 0 auto;}
 		#gpiolist li{margin-top:15px;padding-right: 50px;}
 		#gpiolist li .btn-switch{float:right;}
+
+		#gpiolist li:nth-child(2) .btn-switch span::after {background:linear-gradient( #CBC7BC, red);}
+		#gpiolist li:nth-child(3) .btn-switch span::after {background: linear-gradient( #CBC7BC, green);}
+		#gpiolist li:nth-child(4) .btn-switch span::after {background: linear-gradient( #CBC7BC, blue);}
 	</style>
 
 	<script src="tool.js" ></script>
+	<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 
 </head>
 
@@ -38,11 +43,18 @@
 		function $(selecter){return document.querySelectorAll(selecter);}
 
 		function init(){
-			$("#gpiolist input[id*='gpio']").forEach(obj=>{
+			$("#gpiolist input[id*='gpio']").forEach((obj,idx)=>{
 				obj.addEventListener("change",e=>{
-					Ajax({url:"/setgpio",data:"id=abcc"}).then(r=>console.log(r));
+					Ajax({url:"/setgpio",data:`id=${idx}&ac=${obj.checked?1:0}`}).then(r=>{
+						if(r.rsl){
+							//
+						}else{
+							//
+						}
+					});
+					return false;
 				});
-			})
+			});
 			Reflash();
 		}
 

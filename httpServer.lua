@@ -138,10 +138,14 @@ end
 -- Middleware
 --------------------
 function parseHeader(req, res)
+	--print("-----------------",req.ip)
+	--print(req.source)
 	local _, _, method, path, vars = string.find(req.source, '([A-Z]+) (.+)?(.+) HTTP')
 	if method == nil then
 		_, _, method, path = string.find(req.source, '([A-Z]+) (.+) HTTP')
 	end
+
+	if method == nil then  return false end
 
 	if method:upper() == "POST" then
 		for word in string.gmatch(req.source, "[^\r\n]+") do 
@@ -204,16 +208,26 @@ function httpServer:close()
 	self._srv = nil
 end
 
+local postQueue={}
+
 function httpServer:listen(port)
 	self._srv = net.createServer(net.TCP)
 	self._srv:listen(port, function(conn)
-		conn:on('receive', function(skt, msg)	
+		conn:on('receive', function(skt, msg)
 			local req = { source = msg, path = '', ip = skt:getpeer() }
+		
+			if msg:sub(0,4):upper() == "POST" and msg:sub(-1) == "\n" then
+				postQueue[req.ip]=msg
+				return
+			elseif postQueue[req.ip] then
+				req.source = postQueue[req.ip]..msg
+				postQueue[req.ip] = nil
+			end
+
 			local res = Res:new(skt)
 
 			for i = 1, #self._mids do
-				if string.find(req.path, '^' .. self._mids[i].url .. '$')
-					and not self._mids[i].cb(req, res) then
+				if string.find(req.path, '^' .. self._mids[i].url .. '$') and not self._mids[i].cb(req, res) then
 					break
 				end
 			end
