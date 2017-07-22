@@ -5,7 +5,7 @@ wifi.setmode(wifi.STATION)
 server_run = false
 function StartServer()
     --print("Start Http Server!")
-    --dofile('gpioserver.lua')
+    dofile('gpioserver.lua')
     server_run = true
 end
 
@@ -51,3 +51,9 @@ wifi.setmode(wifi.SOFTAP)
 
 dofile('gpioserver.lua')
 ]]
+
+
+---
+spi.setup(1,spi.MASTER,spi.CPOL_LOW,spi.CPHA_LOW,8,8)
+spi.send(1,0x0f,0x01)
+
