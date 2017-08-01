@@ -6,38 +6,32 @@
 	<title>配置界面</title>
 	<link rel="stylesheet" href="btswitch.css"/>
 	<style>
-		body{zoom:0.5;}
-		#gpiolist{list-style:none;font-size: 50px;line-height: 50px;max-width: 600px;margin: 0 auto;}
-		#gpiolist li{margin-top:15px;padding-right: 50px;}
-		#gpiolist li .btn-switch{float:right;}
-
-		#gpiolist li:nth-child(2) .btn-switch span::after {background:linear-gradient( #CBC7BC, red);}
-		#gpiolist li:nth-child(3) .btn-switch span::after {background: linear-gradient( #CBC7BC, green);}
-		#gpiolist li:nth-child(4) .btn-switch span::after {background: linear-gradient( #CBC7BC, blue);}
+		body{zoom:0.5;font-size: 42px;text-align: center;}
+		#gpiolist{margin: 0px auto;}
+		#gpiolist th{padding:5px 15px;}
 	</style>
 
 	<script src="tool.js" ></script>
-	<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-
 </head>
 
 <body>
 
-	<ul id="gpiolist">
-		<li>GPIO 00<div class='btn-switch'><input type='checkbox' id='gpio00'><label for='gpio00'><span></span></label></div></li>
-		<li>GPIO 01<div class='btn-switch'><input type='checkbox' id='gpio01'><label for='gpio01'><span></span></label></div></li>
-		<li>GPIO 02<div class='btn-switch'><input type='checkbox' id='gpio02'><label for='gpio02'><span></span></label></div></li>
-		<li>GPIO 03<div class='btn-switch'><input type='checkbox' id='gpio03'><label for='gpio03'><span></span></label></div></li>
-		<li>GPIO 04<div class='btn-switch'><input type='checkbox' id='gpio04'><label for='gpio04'><span></span></label></div></li>
-		<li>GPIO 05<div class='btn-switch'><input type='checkbox' id='gpio05'><label for='gpio05'><span></span></label></div></li>
-		<li>GPIO 06<div class='btn-switch'><input type='checkbox' id='gpio06'><label for='gpio06'><span></span></label></div></li>
-		<li>GPIO 07<div class='btn-switch'><input type='checkbox' id='gpio07'><label for='gpio07'><span></span></label></div></li>
-		<li>GPIO 08<div class='btn-switch'><input type='checkbox' id='gpio08'><label for='gpio08'><span></span></label></div></li>
-		<li>GPIO 09<div class='btn-switch'><input type='checkbox' id='gpio09'><label for='gpio09'><span></span></label></div></li>
-		<li>GPIO 10<div class='btn-switch'><input type='checkbox' id='gpio10'><label for='gpio10'><span></span></label></div></li>
-		<li>GPIO 11<div class='btn-switch'><input type='checkbox' id='gpio11'><label for='gpio11'><span></span></label></div></li>
-		<li>GPIO 12<div class='btn-switch'><input type='checkbox' id='gpio12'><label for='gpio12'><span></span></label></div></li>
-	</ul>
+	<table id="gpiolist">
+		<tr><th>IO index</th><th>ESP8266 pin</th><th>Status</th></tr>
+		<tr><td>0</td><td>GPIO 16</td><td><div class='btn-switch'><input type='checkbox' id='gpio00'><label for='gpio00'><span></span></label></div></td></tr>
+		<tr><td>1</td><td>GPIO 5</td><td><div class='btn-switch'><input type='checkbox' id='gpio01'><label for='gpio01'><span></span></label></div></td></tr>
+		<tr><td>2</td><td>GPIO 4</td><td><div class='btn-switch'><input type='checkbox' id='gpio02'><label for='gpio02'><span></span></label></div></td></tr>
+		<tr><td>3</td><td>GPIO 0</td><td><div class='btn-switch'><input type='checkbox' id='gpio03'><label for='gpio03'><span></span></label></div></td></tr>
+		<tr><td>4</td><td>GPIO 2</td><td><div class='btn-switch'><input type='checkbox' id='gpio04'><label for='gpio04'><span></span></label></div></td></tr>
+		<tr><td>5</td><td>GPIO 14</td><td><div class='btn-switch'><input type='checkbox' id='gpio05'><label for='gpio05'><span></span></label></div></td></tr>
+		<tr><td>6</td><td>GPIO 12</td><td><div class='btn-switch'><input type='checkbox' id='gpio06'><label for='gpio06'><span></span></label></div></td></tr>
+		<tr><td>7</td><td>GPIO 13</td><td><div class='btn-switch'><input type='checkbox' id='gpio07'><label for='gpio07'><span></span></label></div></td></tr>
+		<tr><td>8</td><td>GPIO 15</td><td><div class='btn-switch'><input type='checkbox' id='gpio08'><label for='gpio08'><span></span></label></div></td></tr>
+		<tr><td>9</td><td>GPIO 3</td><td><div class='btn-switch'><input type='checkbox' id='gpio09'><label for='gpio09'><span></span></label></div></td></tr>
+		<tr><td>10</td><td>GPIO 1</td><td><div class='btn-switch'><input type='checkbox' id='gpio10'><label for='gpio10'><span></span></label></div></td></tr>
+		<tr><td>11</td><td>GPIO 9</td><td><div class='btn-switch'><input type='checkbox' id='gpio11'><label for='gpio11'><span></span></label></div></td></tr>
+		<tr><td>12</td><td>GPIO 10</td><td><div class='btn-switch'><input type='checkbox' id='gpio12'><label for='gpio12'><span></span></label></div></td></tr>
+	</table>
 
 	<script>
 		function $(selecter){return document.querySelectorAll(selecter);}
