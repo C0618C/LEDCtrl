@@ -29,3 +29,25 @@ spi.send(1,0x076c);
 spi.send(1,0x086c);
 ]]
 --spi.send(1,0x0f,0x00);
+
+-- function MatrixCtrl:Set(row,col,type)
+--     local c_n = row * 0x100
+--     local l_s = self._status[row]
+--     if type then
+--         l_s = bit.set(l_s,8-col)
+--     else
+--         l_s = bit.clear(l_s,8-col)
+--     end
+
+--     spi.send(1,c_n+l_s)
+-- end
+
+    --[[spi.send(1,0x0100);
+    spi.send(1,0x0200);
+    spi.send(1,0x0300);
+    spi.send(1,0x0400);
+    spi.send(1,0x0500);
+    spi.send(1,0x0600);
+    spi.send(1,0x0700);
+    spi.send(1,0x0800);
+    ]]

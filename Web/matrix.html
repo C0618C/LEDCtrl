@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<title>配置界面</title>
+	<link rel="stylesheet" href="btswitch.css"/>
+	<style>
+		#matrix {width:240px;margin:0px auto;}
+		#matrix .m_led{display: inline-block;width:20px;height:20px;background-color:grey;border-radius: 20px 20px;border:5px solid lightgrey;cursor:pointer;opacity: 0.8;}
+		#matrix .m_led.on{background-color:red;opacity: 0.5;}
+
+	</style>
+
+	<script src="tool.js" ></script>
+</head>
+
+<body>
+	<div id="matrix">
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+	</div>
+	<script>
+		$(".m_led").forEach((o,i)=>{
+			o.addEventListener("click",e=>{
+				let isOn = o.className.includes("on");
+				let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
+				o.className = newClassName;
+				
+				Ajax({url:"/setmatrix",data:`id=${i}&ac=${!isOn}`}).then(r=>{
+					if(r.rsl){
+						//
+					}else{
+						//
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

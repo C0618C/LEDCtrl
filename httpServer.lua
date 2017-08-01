@@ -10,10 +10,12 @@ end
 function guessType(filename)
 	local types = {
 		['.css'] = 'text/css', 
-		['.js'] = 'application/javascript', 
-		['.html'] = 'text/html',
+		['.js'] = 'application/x-javascript', 
+		['.html'] = 'text/html;charset=utf-8',
 		['.png'] = 'image/png',
-		['.jpg'] = 'image/jpeg'
+		['.jpg'] = 'image/jpeg',
+		['.ico'] = 'image/x-icon',
+		['.gif'] = 'image/gif'
 	}
 	for ext, type in pairs(types) do
 		if string.sub(filename, -string.len(ext)) == ext
@@ -64,6 +66,7 @@ function Res:send(body)
 	self._type = self._type or 'text/html'
 
 	local buf = 'HTTP/1.1 ' .. self._status .. '\r\n'
+		.. 'Cache-Control: private\r\nConnection: Keep-Alive\r\n'	
 		.. 'Content-Type: ' .. self._type .. '\r\n'
 		.. 'Content-Length: ' .. string.len(body) .. '\r\n'
 		.. 'Access-Control-Allow-Origin: '..'*\r\n'
@@ -99,15 +102,18 @@ function Res:sendFile(filename)
 	end
 
 	self._status = self._status or 200
-	local header = 'HTTP/1.1 ' .. self._status .. '\r\n'
-	
+	local curstatus = self._status  == 200 and self._status..' OK' or self._status
 	self._type = self._type or guessType(filename)
-	header = header .. 'Connection: keep-alive\r\n'
-	header = header .. 'Keep-Alive: timeout=' .. self._timeout .. '\r\n'
-	header = header .. 'Content-Type: ' .. self._type .. '\r\n'
+
+	local header = 'HTTP/1.1 ' .. curstatus .. '\r\n'
+	header = header .. 'Cache-Control: private\r\nConnection: Keep-Alive\r\n'	
+	
 	if string.sub(filename, -3) == '.gz' then
 		header = header .. 'Content-Encoding: gzip\r\n'
 	end
+	header = header .. 'Content-Type: ' .. self._type .. '\r\n'
+	header = header .. 'Server: NMHS/1.0\r\n'
+	header = header .. 'Keep-Alive: timeout=' .. self._timeout .. '\r\n'
 	header = header .. '\r\n'
 
 	--print('* Sending ', filename)
