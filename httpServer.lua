@@ -32,6 +32,7 @@ local Res = {
 	_type = nil,
 	_status = nil,
 	_redirectUrl = nil,
+	_timeout=30
 }
 
 function Res:new(skt)
@@ -64,8 +65,8 @@ function Res:send(body)
 
 	local buf = 'HTTP/1.1 ' .. self._status .. '\r\n'
 		.. 'Content-Type: ' .. self._type .. '\r\n'
-		.. 'Content-Length:' .. string.len(body) .. '\r\n'
-		.. 'Access-Control-Allow-Origin:'..'*\r\n'
+		.. 'Content-Length: ' .. string.len(body) .. '\r\n'
+		.. 'Access-Control-Allow-Origin: '..'*\r\n'
 	if self._redirectUrl ~= nil then
 		buf = buf .. 'Location: ' .. self._redirectUrl .. '\r\n'
 	end
@@ -101,7 +102,8 @@ function Res:sendFile(filename)
 	local header = 'HTTP/1.1 ' .. self._status .. '\r\n'
 	
 	self._type = self._type or guessType(filename)
-
+	header = header .. 'Connection: keep-alive\r\n'
+	header = header .. 'Keep-Alive: timeout=' .. self._timeout .. '\r\n'
 	header = header .. 'Content-Type: ' .. self._type .. '\r\n'
 	if string.sub(filename, -3) == '.gz' then
 		header = header .. 'Content-Encoding: gzip\r\n'
@@ -210,8 +212,9 @@ end
 
 local postQueue={}
 
-function httpServer:listen(port)
-	self._srv = net.createServer(net.TCP)
+function httpServer:listen(port,timeout)
+	Res._timeout =  timeout or Res._timeout
+	self._srv = net.createServer(net.TCP,Res._timeout)
 	self._srv:listen(port, function(conn)
 		conn:on('receive', function(skt, msg)
 			local req = { source = msg, path = '', ip = skt:getpeer() }
@@ -231,7 +234,7 @@ function httpServer:listen(port)
 					break
 				end
 			end
-			collectgarbage() --lua 垃圾回收
+			collectgarbage()
 		end)
 	end)
 end

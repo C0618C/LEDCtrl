@@ -22,3 +22,5 @@ httpServer:use('/setgpio', function(req, res)
 
     res:send('{"rsl":'..rsl..'}')
 end)
+
+print('GPIO Server Run!!!')
