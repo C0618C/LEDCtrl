@@ -7,25 +7,35 @@
 	<title>配置界面</title>
 	<link rel="stylesheet" href="btswitch.css"/>
 	<style>
-		#matrix {width:240px;margin:0px auto;}
-		#matrix .m_led{display: inline-block;width:20px;height:20px;background-color:grey;border-radius: 20px 20px;border:5px solid lightgrey;cursor:pointer;opacity: 0.8;}
+		#matrix,#view_port {width:240px;margin:0px auto;}
+		#matrix .m_led{display: inline-block;width:20px;height:20px;background-color:grey;border-radius: 20px 20px;border:5px solid lightgrey;cursor:pointer;opacity: 0.8;margin-top:-4px;}
 		#matrix .m_led.on{background-color:red;opacity: 0.5;}
+		#ctrl_form input[type="range"]{width:100%;}
 
+		.btn-switch{zoom:0.5;}
+		.btn-switch label::before{content:"On ";}
+		.btn-switch input:checked~label::before{content:"Off";}
 	</style>
 
 	<script src="tool.js" ></script>
 </head>
 
 <body>
-	<div id="matrix">
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
-		<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+	<div id="view_port">
+		<div id="matrix">
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
+		</div>
+		<form id="ctrl_form">
+			<label for="brightness">亮度：</label><input type="range" name="brightness" min="1" max="16" step="1" value="1"/>
+			<div class='btn-switch'><input type='checkbox' id='switch_all'><label for='switch_all'><span></span></label></div>
+		</form>
 	</div>
 	<script>
 		$(".m_led").forEach((o,i)=>{
@@ -35,11 +45,7 @@
 				o.className = newClassName;
 				
 				Ajax({url:"/setmatrix",data:`id=${i}&ac=${!isOn}`}).then(r=>{
-					if(r.rsl){
-						//
-					}else{
-						//
-					}
+					console.log(r)
 				});
 			});
 		});

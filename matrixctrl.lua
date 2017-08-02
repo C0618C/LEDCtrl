@@ -15,18 +15,15 @@ function MatrixCtrl:SetUp()
 end
 
 function MatrixCtrl:SetData(_row,_col,_type)
-    print("r c t:",_row,_col,_type)
     local c_n = _row * 0x100
     local l_s = MatrixCtrl._status[_row]
-    print("q:",l_s)
+
     if _type == 'true' then
         l_s = bit.set(l_s,8-_col)
     elseif _type == 'false' then
         l_s = bit.clear(l_s,8-_col)
         print("l_s:",l_s)
     end
-
-    print("h:",l_s)
 
     MatrixCtrl._status[_row] = l_s
     spi.send(1,c_n+l_s)

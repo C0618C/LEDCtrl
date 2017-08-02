@@ -43,4 +43,4 @@ httpServer:use('/setmatrix', function(req, res)
 end)
 
 mx.SetUp()
-print('GPIO Server Run!!!')
+print('Logic Server Run!!!')
