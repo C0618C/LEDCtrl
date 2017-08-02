@@ -1,4 +1,7 @@
-function $(selecter){return document.querySelectorAll(selecter);}
+function $(selecter){
+    let dom = document.querySelectorAll(selecter);
+    return dom.length == 1?dom[0]:dom;
+}
 function Ajax({method = "POST", async = true, data = null, type = "json", url = "",
     ontimeout = e => { }, onprogress = e => { }, onuprogress = e => { } }={}) {
     return new Promise((resolve, reject) => {

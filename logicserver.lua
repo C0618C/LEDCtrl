@@ -26,12 +26,7 @@ httpServer:use('/setgpio', function(req, res)
 end)
 
 httpServer:use('/setmatrix', function(req, res)
-    local rsl = "false" --gct:Toggle(req.query.id) and "true" or "false"
-
-    --local ac = req.query.ac+0
-    --rsl = ac == 0 and tostring(gct:On(req.query.id)) or tostring(gct:Off(req.query.id))
-    print("req:",req.query.id,req.query.ac)
-
+    local rsl = "false"
     local nn=req.query.id/8
     local r=math.ceil(nn)
     if r == nn then r = r+1 end
@@ -40,6 +35,30 @@ httpServer:use('/setmatrix', function(req, res)
     mx.SetData(_,r,c,req.query.ac)
 
     res:send('{"rsl":'..rsl..'}')
+    collectgarbage()
+end)
+
+httpServer:use('/mx/getall', function(req, res)
+    local status = mx.GetStatus()
+    res:send('[]')
+end)
+
+
+httpServer:use('/mx/switch', function(req, res)
+    if req.query.ac == "true" then
+        mx.On()
+        res:send('{"rsl":"on"}')
+    else
+        mx.Off()
+        res:send('{"rsl":"off"}')
+    end
+    collectgarbage()
+end)
+
+httpServer:use('/mx/brightness', function(req, res)
+    mx.SetBrightness(__,req.query.v);
+    res:send('{"rsl":"'..req.query.v..'"}')
+    collectgarbage()
 end)
 
 mx.SetUp()

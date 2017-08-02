@@ -8,13 +8,18 @@
 	<link rel="stylesheet" href="btswitch.css"/>
 	<style>
 		#matrix,#view_port {width:240px;margin:0px auto;}
+		#matrix{margin-top: 10px;}
 		#matrix .m_led{display: inline-block;width:20px;height:20px;background-color:grey;border-radius: 20px 20px;border:5px solid lightgrey;cursor:pointer;opacity: 0.8;margin-top:-4px;}
 		#matrix .m_led.on{background-color:red;opacity: 0.5;}
 		#ctrl_form input[type="range"]{width:100%;}
-
-		.btn-switch{zoom:0.5;}
+		
+		.row{margin-top:10px;margin-bottom:10px;}
+		label.txt{font-size: 20px;}
+		.btn-switch{zoom:0.5;float: right;}
 		.btn-switch label::before{content:"On ";}
 		.btn-switch input:checked~label::before{content:"Off";}
+		input[type="button"]{align-items:flex-start;background-color:rgb(92, 184, 92);border:solid 1px rgb(76, 174, 76);border-radius:4px 4px;margin:5px 0px;padding:6px 12px;box-sizing:border-box;color:rgb(255, 255, 255);cursor:pointer;display:inline-block;font-size:14px;height:34px;line-height:20px;text-align:center;text-shadow:none;touch-action:manipulation;user-select:none;}
+		input[type="button"]:hover{background-color: #449d44;border-color: #398439;}
 	</style>
 
 	<script src="tool.js" ></script>
@@ -33,14 +38,33 @@
 			<div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div><div class="m_led"></div>
 		</div>
 		<form id="ctrl_form">
-			<label for="brightness">亮度：</label><input type="range" name="brightness" min="1" max="16" step="1" value="1"/>
-			<div class='btn-switch'><input type='checkbox' id='switch_all'><label for='switch_all'><span></span></label></div>
+			<p><label for="brightness" class="txt">亮度：</label><input type="range" id="brightness" min="1" max="16" step="1" value="1"/></p>
+			<div class="row">
+				<label for="switch_all" class="txt">总开关：</label>
+				<div class='btn-switch'><input type='checkbox' id='switch_all' checked="checked"><label for='switch_all'><span></span></label></div>
+			</div>
+			<div class="row">
+				<label for="switch_test" class="txt">测试：</label>
+				<div class='btn-switch'><input type='checkbox' id='switch_test' checked="checked"><label for='switch_test'><span></span></label></div>
+			</div>
+			<div class="row">
+				<input type="button" value="Reload" id="btReload"/>
+			</div>			
 		</form>
 	</div>
 	<script>
 		$(".m_led").forEach((o,i)=>{
-			o.addEventListener("click",e=>{
-				let isOn = o.className.includes("on");
+			// o.addEventListener("click",e=>{
+			// 	let isOn = o.className.includes("on");
+			// 	let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
+			// 	o.className = newClassName;
+				
+			// 	Ajax({url:"/setmatrix",data:`id=${i}&ac=${!isOn}`}).then(r=>{
+			// 		console.log(r)
+			// 	});
+			// });
+			o.addEventListener("mouseover",e=>{
+				let isOn = o.className.includes("on");;
 				let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
 				o.className = newClassName;
 				
@@ -48,6 +72,18 @@
 					console.log(r)
 				});
 			});
+		});
+		$("#switch_all").addEventListener("change",e=>{
+			Ajax({url:"/mx/switch",data:`ac=${!e.target.checked}`}).then(r=>{
+				$(".m_led").forEach((o,i)=>{
+					o.className = e.target.checked?o.className.replace(/( on)+/,""):(o.className+" on")
+				})
+			}).catch(e=>{
+				e.target.checked = !e.target.checked
+			});
+		});
+		$("#brightness").addEventListener("change",e=>{
+			Ajax({url:"/mx/brightness",data:`v=${e.target.value}`}).then(r=>{});
 		});
 	</script>
 </body>
