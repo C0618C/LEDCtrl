@@ -52,13 +52,13 @@ httpServer:use('/mx/getall', function(req, res)
 end)
 
 httpServer:use('/mx/switch', function(req, res)
+    local rsl = false
     if req.query.ac == "true" then
-        mx:On()
-        res:send('{"rsl":"on"}')
+        rsl = mx:On()
     else
-        mx:Off()
-        res:send('{"rsl":"off"}')
+        rsl = mx:Off()
     end
+    res:send('{"rsl":'..(rsl and 'true' or 'false')..'}')
     collectgarbage()
 end)
 
@@ -67,6 +67,18 @@ httpServer:use('/mx/brightness', function(req, res)
     res:send('{"rsl":"'..req.query.v..'"}')
     collectgarbage()
 end)
+
+httpServer:use('/mx/getinfo',function(req,res)
+    local info = mx:GetInfo()
+    local rsl = ''
+    for k in pairs(info.status) do
+        for j=7,0,-1 do
+            rsl = rsl .. (bit.isset(info.status[k],j) and "1" or "0") .. ","            
+        end
+    end
+    res:send('{"status":['..string.sub(rsl,1,-2)..'],"brightness":'.. info.brightness ..'}')
+end)
+
 
 mx:SetUp()
 print('Logic Server Run!!!')

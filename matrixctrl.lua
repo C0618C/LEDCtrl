@@ -38,8 +38,9 @@ function MatrixCtrl:Off()
     spi.send(1,0x0600)
     spi.send(1,0x0700)
     spi.send(1,0x0800)
-
+    self._status = {0,0,0,0,0,0,0,0}
     collectgarbage()
+    return true
 end
 function MatrixCtrl:On()
     spi.send(1,0x01ff)
@@ -50,8 +51,9 @@ function MatrixCtrl:On()
     spi.send(1,0x06ff)
     spi.send(1,0x07ff)
     spi.send(1,0x08ff)
-
+    self._status = {255,255,255,255,255,255,255,255}
     collectgarbage()
+    return true
 end
 
 function MatrixCtrl:SetBrightness(value)
@@ -59,6 +61,14 @@ function MatrixCtrl:SetBrightness(value)
     spi.send(1,0x0a00+value);
     collectgarbage()
 end
+
+function MatrixCtrl:GetInfo()
+    return {
+        status=self._status,
+        brightness=self._brightness
+    }
+end
+
 
 collectgarbage()
 

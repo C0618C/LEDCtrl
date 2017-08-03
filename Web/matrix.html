@@ -51,31 +51,25 @@
 		</form>
 	</div>
 	<script>
+		function Turn(status){
+			if(this.className.includes("on") == status) return;
+			this.className =status?(this.className+" on"):this.className.replace(" on","");
+		}
+
 		$(".m_led").forEach((o,i)=>{
-			// o.addEventListener("click",e=>{
-			// 	let isOn = o.className.includes("on");
-			// 	let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
-			// 	o.className = newClassName;
-				
-			// 	Ajax({url:"/setmatrix",data:`id=${i}&ac=${!isOn}`}).then(r=>{
-			// 		console.log(r)
-			// 	});
-			// });
-			o.addEventListener("mouseover",e=>{
-				let isOn = o.className.includes("on");;
-				let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
-				o.className = newClassName;
-				
-				Ajax({url:"/mx/setdata",data:`id=${i}&ac=${!isOn}`}).then(r=>{
+			o.Turn = Turn.bind(o);
+			o.addEventListener("click",e=>{
+				let isOn = !o.className.includes("on");
+				o.Turn(isOn);
+				Ajax({url:"/mx/setdata",data:`id=${i}&ac=${isOn}`}).then(r=>{
 					console.log(r)
 				});
 			});
 		});
 		$("#switch_all").addEventListener("change",e=>{
 			Ajax({url:"/mx/switch",data:`ac=${!e.target.checked}`}).then(r=>{
-				$(".m_led").forEach((o,i)=>{
-					o.className = e.target.checked?o.className.replace(/( on)+/,""):(o.className+" on")
-				})
+				if(!r.rsl) return;
+				$(".m_led").forEach((o,i)=>o.Turn( e.target.checked))
 			}).catch(e=>{
 				e.target.checked = !e.target.checked
 			});
@@ -83,6 +77,16 @@
 		$("#brightness").addEventListener("change",e=>{
 			Ajax({url:"/mx/brightness",data:`v=${e.target.value}`}).then(r=>{});
 		});
+		$("#btReload").addEventListener("click",e=>{
+			Ajax({url:"/mx/getinfo",data:`v=${e.target.value}`}).then(r=>{
+				let leds = $(".m_led");
+				r.status.forEach((v,i)=>{
+					leds[i].Turn(v==1);
+				});
+				$("#brightness").value = r.brightness;
+			});
+		});
+
 	</script>
 </body>
 
