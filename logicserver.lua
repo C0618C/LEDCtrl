@@ -7,6 +7,10 @@ httpServer:listen(80,20)
 httpServer:use('/welcome', function(req, res)
     res:send('Hello ' .. req.query.name) -- /welcome?name=doge
 end)
+
+--[[
+        GPIO Handel
+]]
 httpServer:use('/gpiolist', function(req, res)
     local gInfo = gct:Info()
     local rsl_str="["
@@ -25,41 +29,44 @@ httpServer:use('/setgpio', function(req, res)
     res:send('{"rsl":'..rsl..'}')
 end)
 
-httpServer:use('/setmatrix', function(req, res)
+
+--[[
+        8*8 Led Matrix
+]]
+httpServer:use('/mx/setdata', function(req, res)
     local rsl = "false"
     local nn=req.query.id/8
     local r=math.ceil(nn)
     if r == nn then r = r+1 end
     local c=req.query.id%8+1
 
-    mx.SetData(_,r,c,req.query.ac)
+    mx:SetData(r,c,req.query.ac)
 
     res:send('{"rsl":'..rsl..'}')
     collectgarbage()
 end)
 
 httpServer:use('/mx/getall', function(req, res)
-    local status = mx.GetStatus()
+    local status = mx:GetStatus()
     res:send('[]')
 end)
 
-
 httpServer:use('/mx/switch', function(req, res)
     if req.query.ac == "true" then
-        mx.On()
+        mx:On()
         res:send('{"rsl":"on"}')
     else
-        mx.Off()
+        mx:Off()
         res:send('{"rsl":"off"}')
     end
     collectgarbage()
 end)
 
 httpServer:use('/mx/brightness', function(req, res)
-    mx.SetBrightness(__,req.query.v);
+    mx:SetBrightness(req.query.v);
     res:send('{"rsl":"'..req.query.v..'"}')
     collectgarbage()
 end)
 
-mx.SetUp()
+mx:SetUp()
 print('Logic Server Run!!!')

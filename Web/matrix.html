@@ -66,7 +66,7 @@
 				let newClassName =isOn?o.className.replace(" on",""):(o.className+" on")
 				o.className = newClassName;
 				
-				Ajax({url:"/setmatrix",data:`id=${i}&ac=${!isOn}`}).then(r=>{
+				Ajax({url:"/mx/setdata",data:`id=${i}&ac=${!isOn}`}).then(r=>{
 					console.log(r)
 				});
 			});
