@@ -1,7 +1,7 @@
 # LEDCtrl
 ## 为何有这个东西、这东西想要做些什么  
 因为我需要一套能遥控30路灯光亮、灭的控制系统，可以装在模型上面。  
-![Demo](https://raw.githubusercontent.com/C0618C/LEDCtrl/master/docs/demo.gif)  
+  ![Demo](https://raw.githubusercontent.com/C0618C/LEDCtrl/master/docs/demo.gif)   |  
 上图是8×8点阵，有64个LED，将8×8LED模块拆下，接上对应的LED就能将LED分散布置在模型需要灯光的位置上  
   
 ### 这是用于NodeMCU Luc开发板的一个项目。项目需求为：
