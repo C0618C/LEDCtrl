@@ -1,5 +1,6 @@
 @echo off
-del /q Release\*
+rd /s /q Release
+md Release
 
 for /r Web\ %%a in (*) do (
     echo %%a>tempv
