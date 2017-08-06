@@ -1,3 +1,5 @@
+collectgarbage()
+
 print("============ build start ==========")
 local luaFile = {"httpServer","logicserver","matrixctrl","gpioctrl"}
 for i,f in ipairs(luaFile) do
@@ -13,3 +15,5 @@ luaFile = nil
 collectgarbage()
 file.remove("build.lua")
 print("============ remove build.lua ==========")
+
+collectgarbage()
