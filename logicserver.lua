@@ -79,6 +79,11 @@ httpServer:use('/mx/getinfo',function(req,res)
     res:send('{"status":['..string.sub(rsl,1,-2)..'],"brightness":'.. info.brightness ..'}')
 end)
 
+httpServer:use('/mx/test', function(req, res)
+    mx:Test(req.query.v);
+    res:send('{"rsl":"'..req.query.v..'"}')
+    collectgarbage()
+end)
 
 mx:SetUp()
 print('Logic Server Run!!!')

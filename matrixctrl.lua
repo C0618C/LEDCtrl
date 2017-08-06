@@ -69,6 +69,10 @@ function MatrixCtrl:GetInfo()
     }
 end
 
+function MatrixCtrl:Test(isTest)
+    print(isTest == 'true' and 0x0f01 or 0x0f00)
+    spi.send(1,(isTest == 'true' and 0x0f01 or 0x0f00));
+end
 
 collectgarbage()
 

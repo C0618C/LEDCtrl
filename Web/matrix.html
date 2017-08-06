@@ -71,7 +71,7 @@
 		$("#switch_all").addEventListener("change",e=>{
 			Ajax({url:"/mx/switch",data:`ac=${!e.target.checked}`}).then(r=>{
 				if(!r.rsl) return;
-				$(".m_led").forEach((o,i)=>o.Turn( e.target.checked))
+				$(".m_led").forEach((o,i)=>o.Turn(!e.target.checked))
 			}).catch(e=>{
 				e.target.checked = !e.target.checked
 			});
@@ -88,6 +88,9 @@
 				$("#brightness").value = r.brightness;
 			});
 		});
+		$("#switch_test").addEventListener("change",e=>{
+			Ajax({url:"/mx/test",data:`v=${!e.target.checked}`}).then(r=>{});
+		},false);
 
 	</script>
 </body>
