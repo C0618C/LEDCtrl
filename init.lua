@@ -1,12 +1,14 @@
---Connect to wifi
---//[[
-wifi.setmode(wifi.STATION)
+local gct = require("gpioctrl")
+gct:Low(4)
+
+wifi.setmode(wifi.STATIONAP)
 
 server_run = false
 function StartServer()
     --print("Start Http Server!")
-    dofile('logicserver.lua')
+    dofile('logicserver.lc')
     server_run = true
+    gct:High(4)
 end
 
 function FindTarget(t)
