@@ -7,14 +7,20 @@
 	<title>管理</title>
 	<link rel="stylesheet" href="btswitch.css"/>
 	<style>
-
+		.main{max-width: 400px;margin: 0px auto;}
+		.main .bt{width:100%;}
 	</style>
 
 	<script src="tool.js" ></script>
 </head>
 
 <body>
-
+	<div class="main">
+		<div class="row"><input class="bt" type="button" value="硬件信息" id="btInfo"/></div>	
+		<div class="row"><input class="bt" type="button" value="网络管理" id="btNetSetting" /></div>	
+		<div class="row"><a class="bt" href="gpio.html">GPIO</a></div>
+		<div class="row"><a class="bt" href="matrix.html">灯组控制</a></div>
+	</div>
 	
 </body>
 

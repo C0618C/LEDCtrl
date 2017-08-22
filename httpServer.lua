@@ -140,6 +140,7 @@ function Res:close()
 	self._skt:on('receive', function() end)
 	self._skt:close()
 	self._skt = nil
+	collectgarbage()
 end
 
 --------------------
@@ -214,6 +215,7 @@ end
 function httpServer:close()
 	self._srv:close()
 	self._srv = nil
+	collectgarbage()
 end
 
 local postQueue={}

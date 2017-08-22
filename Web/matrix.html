@@ -48,8 +48,11 @@
 				<div class='btn-switch'><input type='checkbox' id='switch_test' checked="checked"><label for='switch_test'><span></span></label></div>
 			</div>
 			<div class="row">
-				<input type="button" value="Reload" id="btReload"/>
-			</div>			
+				<input class="bt" type="button" value="Reload" id="btReload"/>
+			</div>
+			<div class="row">
+				<input class="bt" type="button" value="退出测试" id="btExTest"/>
+			</div>
 		</form>
 	</div>
 	<script>
@@ -90,6 +93,9 @@
 		});
 		$("#switch_test").addEventListener("change",e=>{
 			Ajax({url:"/mx/test",data:`v=${!e.target.checked}`}).then(r=>{});
+		},false);
+		$("#btExTest").addEventListener("click",e=>{
+			Ajax({url:"/mx/fix"}).then(r=>{});
 		},false);
 
 	</script>

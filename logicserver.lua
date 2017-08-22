@@ -85,5 +85,11 @@ httpServer:use('/mx/test', function(req, res)
     collectgarbage()
 end)
 
+httpServer:use('/mx/fix', function(req, res)
+    mx:Test('false');
+    res:send('{"rsl":"'..req.query.v..'"}')
+    collectgarbage()
+end)
+
 mx:SetUp()
 print('Logic Server Run!!!')
