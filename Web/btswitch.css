@@ -11,10 +11,10 @@
 .btn-switch {
     display: inline-block;
     position: relative;
-    line-height: 50px;
-    height: 56px;
-    width: 188px;
-    border-radius: 25px;
+    line-height: 25px;
+    height: 28px;
+    width: 94px;
+    border-radius: 12.5px;
     background: linear-gradient( WhiteSmoke, DarkGray);
     box-shadow: 0 0 5px rgba( 0, 0, 0, .4),
     1px 1px 8px rgba( 0, 0, 0, .3);
@@ -27,11 +27,11 @@
 
 .btn-switch label {
     position: absolute;
-    top: 6px;
-    left: 10px;
-    width: 170px;
-    height: 44px;
-    line-height: 50px;
+    top: 3px;
+    left: 5px;
+    width: 85px;
+    height: 22px;
+    line-height: 22px;
     border-radius: 20px;
     background: rgba(144, 238, 144, .8);
 
@@ -43,31 +43,30 @@
 .btn-switch span::before {
     content: " ";
     position: absolute;
-    width: 90px;
-    height: 46px;
+    width: 45px;
+    height: 22px;
     background: linear-gradient( #F7F2F6, #B2AC9E);
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3),
     0 5px 5px rgba(0, 0, 0, 0.2);
     border-radius: 24px;
     left: -2px;
-    top: -1px;
+    top: 0px;
 }
 
 .btn-switch span::after {
     content: " ";
     position: absolute;
-    width: 66px;
-    height: 24px;
-    left: 10px;
-    top: 10px;
+    width: 33px;
+    height: 12px;
+    left: 4px;
+    top: 5px;
     border-radius: 12px;
     background: linear-gradient( #CBC7BC, #D2CBC3);
 }
 
 .btn-switch label::before {
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 14px;
     text-transform: uppercase;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .7),
     0 1px 0 rgba(255, 255, 255, .8);
@@ -88,7 +87,7 @@
 }
 
 .btn-switch input:checked~label span::after {
-    right: 10px;
+    right: 4px;
     left: auto;
 }
 

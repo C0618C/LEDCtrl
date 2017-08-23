@@ -70,7 +70,7 @@ function MatrixCtrl:GetInfo()
 end
 
 function MatrixCtrl:Test(isTest)
-    --print(isTest == 'true' and 0x0f01 or 0x0f00)
+    print("matrix test",isTest)
     spi.send(1,(isTest == 'true' and 0x0f01 or 0x0f00));
 end
 

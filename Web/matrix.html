@@ -14,7 +14,7 @@
 				
 		.row{margin-top:10px;margin-bottom:10px;}
 		label.txt{font-size: 20px;}
-		.btn-switch{zoom:0.5;float: right;}
+		.btn-switch{float: right;}
 		.btn-switch label::before{content:"On ";}
 		.btn-switch input:checked~label::before{content:"Off";}
 		.right_range{margin-left: 65px;}
@@ -95,7 +95,7 @@
 			Ajax({url:"/mx/test",data:`v=${!e.target.checked}`}).then(r=>{});
 		},false);
 		$("#btExTest").addEventListener("click",e=>{
-			Ajax({url:"/mx/fix"}).then(r=>{});
+			Ajax({url:"/mx/fix",data:"v=false"}).then(r=>{});
 		},false);
 
 	</script>

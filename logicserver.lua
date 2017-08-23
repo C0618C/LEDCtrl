@@ -86,8 +86,15 @@ httpServer:use('/mx/test', function(req, res)
 end)
 
 httpServer:use('/mx/fix', function(req, res)
-    mx:Test('false');
     res:send('{"rsl":"'..req.query.v..'"}')
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
+    mx:Test('false');
     collectgarbage()
 end)
 
